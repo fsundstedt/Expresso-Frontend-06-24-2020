@@ -14,14 +14,6 @@ export function Test() {
   const [inputName, setUserName] = useState('test name');
   const [inputLogin, setLogin] = useState(login);
 
-  function loginGroup() {
-    console.log(inputLogin);
-    setLogin(1);
-    console.log(inputLogin);
-    dispatch(changeLogin(inputLogin || 0));
-    console.log(inputLogin);
-  }
-
   return (
     <div>
       <div>
