@@ -31,6 +31,7 @@ const handleSubmit = async () => {
 
       const url = "http://localhost:9000/signup";
       const response = await postAPI(url, data);
+      console.log(response);
 
       if (response.status === 200) {
         alert("Account Created");
@@ -46,7 +47,7 @@ const handleSubmit = async () => {
 export function Signup() {
     return (
         <div>
-            {handleSubmit()}
+            signup page: not functional
         </div>
     );
 }

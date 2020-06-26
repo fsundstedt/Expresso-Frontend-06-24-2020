@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import PublicPull from './publicPull';
 
 class Index extends Component {
   state = {
@@ -7,6 +8,7 @@ class Index extends Component {
 
   async getData() {
     const response = await fetch('http://localhost:9000/',{
+        method: 'GET',
         mode: 'cors',
         headers: {
             'Access-Control-Allow-Origin':'*',
@@ -35,7 +37,7 @@ class Index extends Component {
           {pullsArray.length > 0 ? (
             pullsArray.map((pull) => (
               <li>
-                  {pull}
+                  <PublicPull pull={pull}/>
               </li>
             ))
           ) : (
