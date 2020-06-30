@@ -1,6 +1,6 @@
 import React from 'react';
-import { Test } from './components/reduxTest';
 import { Signup } from './components/signup';
+import { Login } from './components/login';
 import Index  from './components/indexPage';
 
 function App() {
@@ -8,7 +8,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <br />
-        <Test />
+        <Login />
+        <br />
         <Signup />
         <Index />
       </header>

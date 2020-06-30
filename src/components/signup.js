@@ -1,7 +1,23 @@
 import React from 'react';
 
+
+let inputUser = 'username';
+let inputEmail = 'email';
+let inputPassword = 'password';
+
+const setUser = (user) => {
+  inputUser = user;
+};
+
+const setEmail = (email) => {
+  inputEmail = email;
+};
+
+const setPassword = (password) => {
+  inputPassword = password;
+};
+
 const postAPI = async (url, data) => {
-    console.log('posting');
     const response = await fetch(url, {
       method: "POST",
       mode: 'cors',
@@ -11,32 +27,26 @@ const postAPI = async (url, data) => {
       },
       body: JSON.stringify(data),
     }).then((response) => response.json());
-    console.log(response);
     return response;
   };
 
 const handleSubmit = async () => {
 
-    console.log('attempt');
-
     try {
 
       const data = {
-        username: 'Expresso',
-        email: 'admin@email.com',
-        user_password: 'admin',
+        username: inputUser,
+        email: inputEmail,
+        user_password: inputPassword,
       };
-
-      console.log('attempt pt2');
 
       const url = "http://localhost:9000/signup";
       const response = await postAPI(url, data);
-      console.log(response);
 
-      if (response.status === 200) {
+      if (typeof response.userId === 'number') {
         alert("Account Created");
       }
-      if (response.status !== 200) {
+      if (typeof response.userId !== 'number') {
         alert("Unable to sign up. Please try again later or go to login page.");
       }
     } catch (err) {
@@ -45,9 +55,31 @@ const handleSubmit = async () => {
   };
 
 export function Signup() {
+
     return (
         <div>
-            signup page: not functional
+          <div>Username</div>
+          <input
+            onChange={e => setUser(e.target.value)}
+          />
+          <div>Email</div>
+          <input
+            onChange={e => setEmail(e.target.value)}
+          />
+          <div>Password</div>
+          <input
+            onChange={e => setPassword(e.target.value)}
+          />
+          <div>
+            <br/>
+            <button
+              onClick={() =>
+                handleSubmit()
+              }
+              >
+              Submit User
+            </button>
+          </div>
         </div>
     );
 }
