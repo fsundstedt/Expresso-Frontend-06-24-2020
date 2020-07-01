@@ -9,9 +9,6 @@ import {
   selectLogin,
 } from '../redux/userSlice';
 
-let user_id = 'aaaa';
-let user_name = 'bbbb';
-
 const postAPI = async (url, data) => {
     const response = await fetch(url, {
       method: "POST",
@@ -22,7 +19,8 @@ const postAPI = async (url, data) => {
       },
       body: JSON.stringify(data),
     }).then((response) => response.json());
-    console.log(response);
+    console.log('Component login line 25: ' + response.userId);
+    console.log(response)
     return response;
   };
 
@@ -39,11 +37,7 @@ async function handleSubmit(submitEmail, submitPassword) {
         const url = "http://localhost:9000/login";
         const response = await postAPI(url, data);
 
-        console.log(response)
-
         if (typeof response.userId === 'number') {
-        user_id = response.userId;
-        user_name = response.userName;
 
         const info = {
             user_id: response.userId,
@@ -65,19 +59,24 @@ export function Login() {
   const userName = useSelector(selectUserName);
   const logged_in = useSelector(selectLogin);
   const dispatch = useDispatch();
-  const [inputEmail, setEmail] = useState('email');
+  const [inputEmail, setEmail] = useState('frank@email.com');
   const [inputPassword, setPassword] = useState('password');
+
+  function updateUser(id, name) {
+    dispatch(changeUserId(id || 0));
+    dispatch(changeUserName(name || 0));
+  }
 
   const submitLogin = async () => {
     console.log('signin attempt');
 
     const response = await handleSubmit(inputEmail, inputPassword);
 
-    console.log(response);
+    console.log(response.user_id);
 
-    dispatch(changeUserId(response.user_id || 0));
-    dispatch(changeUserName(response.user_name || 0));
+    updateUser(response.user_id, response.user_name);
     dispatch(changeLogin(1 || 0));
+    console.log(userId);
   }
 
     return (
