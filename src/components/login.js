@@ -19,13 +19,10 @@ const postAPI = async (url, data) => {
       },
       body: JSON.stringify(data),
     }).then((response) => response.json());
-    console.log('Component login line 25: ' + response.userId);
-    console.log(response)
     return response;
   };
 
 async function handleSubmit(submitEmail, submitPassword) {
-    console.log('handle submit function')
 
     const data = {
         email: submitEmail,
@@ -46,7 +43,6 @@ async function handleSubmit(submitEmail, submitPassword) {
         return info;
         }
         if (typeof response.userId !== 'number') {
-        console.log('login failed');
         return false;
         }
     } catch (err) {
@@ -68,15 +64,11 @@ export function Login() {
   }
 
   const submitLogin = async () => {
-    console.log('signin attempt');
 
     const response = await handleSubmit(inputEmail, inputPassword);
 
-    console.log(response.user_id);
-
     updateUser(response.user_id, response.user_name);
     dispatch(changeLogin(1 || 0));
-    console.log(userId);
   }
 
     return (

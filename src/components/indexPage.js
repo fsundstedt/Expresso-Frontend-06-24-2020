@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PublicPull from './publicPull';
+import { AddPull } from './addPull';
+import { useSelector } from 'react-redux';
+import {
+  selectLogin,
+} from '../redux/userSlice';
 
-class Index extends Component {
-  state = {
-    pulls: [],
-  };
+export function Index() {
+  const logged_in = useSelector(selectLogin);
+  const [pulls, setPulls] = useState([]);
 
-  async getData() {
+  async function getData() {
     const response = await fetch('http://localhost:9000/',{
         method: 'GET',
         mode: 'cors',
@@ -18,34 +22,42 @@ class Index extends Component {
     });
     const data = await response.json();
     return data;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getData();
+      setPulls(result);
+    };
+    fetchData();
+    return;
+  }, []);
+
+  const status = () => {
+    if (logged_in === 1) {
+        return (
+          <li>
+            <AddPull />
+          </li>
+        );
+    }
   }
 
-  async componentDidMount() {
-    const pulls = await this.getData();
-
-    this.setState({
-      pulls: pulls,
-    });
-  }
-
-  render() {
-    let pullsArray = this.state.pulls;
-
-    return (
-      <div>
-        <ul>
-          {pullsArray.length > 0 ? (
-            pullsArray.map((pull) => (
-              <li>
-                  <PublicPull pull={pull}/>
-              </li>
-            ))
-          ) : (
+  return (
+    <div>
+      <ul>
+        {status()}
+        {pulls.length > 0 ? (
+          pulls.map((pull, index) => (
+            <li key={index}>
+                <PublicPull pull={pull}/>
+            </li>
+          ))
+        ) : (
             <li>No Data</li>
-          )}
-        </ul>
-      </div>
-    );
-  }
+        )}
+      </ul>
+    </div>
+  );
 }
 export default Index;
