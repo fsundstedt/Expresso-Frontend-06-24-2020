@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PublicPull from './publicPull';
 import { AddPull } from './addPull';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   selectLogin,
 } from '../redux/userSlice';
@@ -41,7 +41,7 @@ export function Index() {
           </li>
         );
     }
-  }
+  };
 
   return (
     <div>

@@ -6,6 +6,7 @@ export const userSlice = createSlice({
     user_id: null,
     user_name: null,
     logged_in: 0,
+    modal_status: 0,
   },
   reducers: {
     changeUserId: (state, action) => {
@@ -24,7 +25,6 @@ export const { changeUserId, changeUserName, changeLogin } = userSlice.actions;
 
 export const selectUserId = state => state.user.user_id;
 export const selectUserName = state => state.user.user_name;
-
 export const selectLogin = state => state.user.logged_in;
 
 export default userSlice.reducer;
