@@ -4,6 +4,8 @@ import {
   selectUserId,
 } from '../redux/userSlice';
 
+import { PullBox, PullTextInput, PullInputRadioSet } from '../styled'
+
 const postAPI = async (url, data) => {
     const response = await fetch(url, {
       method: "POST",
@@ -39,6 +41,7 @@ async function handleSubmit(data) {
 
 export function AddPull() {
     const [inputs, setInputs] = useState(false);
+    const [process, setProcess] = useState('Pourover');
     const [brand, setBrand] = useState('Test Brand');
     const [roast, setRoast] = useState('Test Roast');
     const [grind, setGrind] = useState('Fine');
@@ -52,6 +55,7 @@ export function AddPull() {
 
     const data = {
         id: id,
+        process: process,
         brand: brand,
         roast: roast,
         grind: grind,
@@ -66,7 +70,8 @@ export function AddPull() {
 
     const submitPull = async () => {
         const response = await handleSubmit(data);
-      }
+        return response;
+    }
     
     function changeInputs() {
         setInputs(!inputs);
@@ -75,58 +80,126 @@ export function AddPull() {
     function showInputs() {
         if (inputs) {
             return (
-                <div>
+                <PullBox>
                     <div>
-                        <div>Brand</div>
-                        <input
-                        value={brand} 
-                        onChange={e => setBrand(e.target.value)}/>
-                        <div>Roast</div>
-                        <input
-                        value={roast} 
-                        onChange={e => setRoast(e.target.value)}/>
-                        <div>Grind</div>
-                        <input
-                        value={grind} 
-                        onChange={e => setGrind(e.target.value)}/>
-                        <div>Grind Weight</div>
-                        <input 
-                        value={grindWeight}                         
-                        onChange={e => setGrindWeight(e.target.value)}/>
-                        <div>Water Weight</div>
-                        <input
-                        value={waterWeight}
-                        onChange={e => setWaterWeight(e.target.value)}/>
-                        <div>Extraction Time</div>
-                        <input
-                        value={extractionTime}
-                        onChange={e => setExtractionTime(e.target.value)}/>
-                        <div>Rating</div>
-                        <input
-                        value={rating}
-                        onChange={e => setRating(e.target.value)}/>
-                        <div>Favorite</div>
-                        <input
-                        value={favorite}
-                        onChange={e => setFavorite(e.target.value)}/>
-                        <div>Notes</div>
-                        <input
-                        value={notes}
-                        onChange={e => setNotes(e.target.value)}/>
+                        <div>
+                            <PullTextInput
+                            value={brand} 
+                            onChange={e => setBrand(e.target.value)}/>
+                        </div>
+                        <PullInputRadioSet>
+                            <div>
+                                <label>
+                                    <input
+                                    type='radio'
+                                    value='Pourover'
+                                    checked={process === 'Pourover'}
+                                    onChange={e => setProcess(e.target.value)}/>
+                                    Drip
+                                </label>
+                                <label>
+                                    <input
+                                    type='radio'
+                                    value='Press'
+                                    checked={process === 'Press'}
+                                    onChange={e => setProcess(e.target.value)}/>
+                                    Press
+                                </label>
+                                <label>
+                                    <input
+                                    type='radio'
+                                    value='Espresso'
+                                    checked={process === 'Espresso'}
+                                    onChange={e => setProcess(e.target.value)}/>
+                                    Espresso
+                                </label>
+                                <label>
+                                    <input
+                                    type='radio'
+                                    value='Cold Brew'
+                                    checked={process === 'Cold Brew'}
+                                    onChange={e => setProcess(e.target.value)}/>
+                                    Cold Brew
+                                </label>
+                            </div>
+                        </PullInputRadioSet>
+                        <PullInputRadioSet>
+                            <div>
+                                <label>
+                                    <input
+                                    type='radio'
+                                    value='Light'
+                                    checked={roast === 'Light'}
+                                    onChange={e => setRoast(e.target.value)}/>
+                                    Light
+                                </label>
+                                <label>
+                                    <input
+                                    type='radio'
+                                    value='Medium'
+                                    checked={roast === 'Medium'}
+                                    onChange={e => setRoast(e.target.value)}/>
+                                    Medium
+                                </label>
+                                <label>
+                                    <input
+                                    type='radio'
+                                    value='Dark'
+                                    checked={roast === 'Dark'}
+                                    onChange={e => setRoast(e.target.value)}/>
+                                    Dark
+                                </label>
+                            </div>
+                        </PullInputRadioSet>
+                        <div>Grind
+                            <input
+                            value={grind} 
+                            onChange={e => setGrind(e.target.value)}/>
+                        </div>
+                        <div>Grind Weight
+                            <input 
+                            value={grindWeight}                         
+                            onChange={e => setGrindWeight(e.target.value)}/>
+                        </div>
+                        <div>Water Weight
+                            <input
+                            value={waterWeight}
+                            onChange={e => setWaterWeight(e.target.value)}/>
+                        </div>
+                        <div>Extraction Time
+                            <input
+                            value={extractionTime}
+                            onChange={e => setExtractionTime(e.target.value)}/>
+                        </div>
+                        <div>Rating
+                            <input
+                            value={rating}
+                            onChange={e => setRating(e.target.value)}/>
+                        </div>
+                        <div>Favorite
+                            <input
+                            value={favorite}
+                            onChange={e => setFavorite(e.target.value)}/>
+                        </div>
+                        <div>Notes
+                            <input
+                            value={notes}
+                            onChange={e => setNotes(e.target.value)}/>
+                        </div>
                         <button onClick={() => submitPull()}>
-                        Sign In
+                        Add Pull
                         </button>
                     </div>
-                    <button onClick={() => submitPull()}>
+                    <button onClick={() => changeInputs()}>
                         close
                     </button>
-                </div>
+                </PullBox>
             )
         } else {
             return (
-                <button onClick={() => changeInputs()}>
+                <PullBox onClick={() => changeInputs()}>
                     Add your pull
-                </button>
+                </PullBox>
             )
         }
     };

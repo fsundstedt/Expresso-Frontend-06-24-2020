@@ -43,10 +43,12 @@ const handleSubmit = async () => {
       const url = "http://localhost:9000/signup";
       const response = await postAPI(url, data);
 
-      if (typeof response.userId === 'number') {
+      if (response.userId > 0) {
         alert("Account Created");
       }
-      if (typeof response.userId !== 'number') {
+      if (response.userId === 0) {
+        alert("Username already taken.");
+      } else {
         alert("Unable to sign up. Please try again later or go to login page.");
       }
     } catch (err) {

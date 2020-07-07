@@ -6,7 +6,6 @@ export const userSlice = createSlice({
     user_id: null,
     user_name: null,
     logged_in: 0,
-    modal_status: 0,
   },
   reducers: {
     changeUserId: (state, action) => {

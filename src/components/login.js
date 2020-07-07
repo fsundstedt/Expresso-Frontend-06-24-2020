@@ -34,16 +34,19 @@ async function handleSubmit(submitEmail, submitPassword) {
         const url = "http://localhost:9000/login";
         const response = await postAPI(url, data);
 
-        if (typeof response.userId === 'number') {
-
-        const info = {
+        if (response.userId > 0) {
+          const info = {
             user_id: response.userId,
             user_name: response.userName,
+          }
+          return info;
+        } else {
+          const info = {
+            user_id: null,
+            user_name: null,
         }
+
         return info;
-        }
-        if (typeof response.userId !== 'number') {
-        return false;
         }
     } catch (err) {
       return err;
@@ -55,7 +58,7 @@ export function Login() {
   const userName = useSelector(selectUserName);
   const logged_in = useSelector(selectLogin);
   const dispatch = useDispatch();
-  const [inputEmail, setEmail] = useState('frank@email.com');
+  const [inputEmail, setEmail] = useState('expresso@email.com');
   const [inputPassword, setPassword] = useState('password');
 
   function updateUser(id, name) {
@@ -67,8 +70,12 @@ export function Login() {
 
     const response = await handleSubmit(inputEmail, inputPassword);
 
-    updateUser(response.user_id, response.user_name);
-    dispatch(changeLogin(1 || 0));
+    if (response.user_id !== null) {
+      updateUser(response.user_id, response.user_name);
+      dispatch(changeLogin(1 || 0));
+    } else {
+      alert('Incorrect login credentials');     
+    }
   }
 
     return (

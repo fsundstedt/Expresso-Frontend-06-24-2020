@@ -1,31 +1,30 @@
 import React from 'react';
+import { PullBox, PullBoxItem } from '../styled'
 
 export default function PublicPull(props) {
     const pull = props.pull;
 
     return (
-        <div>
-            <div>
-                {pull.brand} {pull.roast} Roast
-            </div>
-            <div>
-                Grind: {pull.grind}
-            </div>
-            <div>
-                Grind Weight: {pull.weight_grind}g
-            </div>
-            <div>
-                Water Weight: {pull.weight_pull}g
-            </div>
-            <div>
-                Extraction Time: {pull.pull_time} seconds
-            </div>
-            <div>
+        <PullBox>
+            <PullBoxItem>
+                {pull.brand} - {pull.roast} Roast {pull.process}
+            </PullBoxItem>
+            <br />
+            <PullBoxItem>
+                Grind: {pull.weight_grind}g {pull.grind} for {pull.weight_pull}g Final Weight
+            </PullBoxItem>
+            <br />
+            <PullBoxItem>
+                Extraction Time: {pull.pull_time} sec.
+            </PullBoxItem>
+            <br />
+            <PullBoxItem>
                 Rating: {pull.rating}
-            </div>
-            <div>
+            </PullBoxItem>
+            <br />
+            <PullBoxItem>
                 Notes: {pull.notes}
-            </div>
-        </div>
+            </PullBoxItem>
+        </PullBox>
     );
 }

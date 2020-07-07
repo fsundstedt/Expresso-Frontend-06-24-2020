@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PublicPull from './publicPull';
 import { AddPull } from './addPull';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   selectLogin,
 } from '../redux/userSlice';
+
+// styles
+import { PullListWrapper, PullList } from '../styled'
 
 export function Index() {
   const logged_in = useSelector(selectLogin);
@@ -36,27 +39,27 @@ export function Index() {
   const status = () => {
     if (logged_in === 1) {
         return (
-          <li>
+          <PullList>
             <AddPull />
-          </li>
+          </PullList>
         );
     }
   };
 
   return (
     <div>
-      <ul>
+      <PullListWrapper>
         {status()}
         {pulls.length > 0 ? (
           pulls.map((pull, index) => (
-            <li key={index}>
+            <PullList key={index}>
                 <PublicPull pull={pull}/>
-            </li>
+            </PullList>
           ))
         ) : (
-            <li>No Data</li>
+            <PullList>Loading...</PullList>
         )}
-      </ul>
+      </PullListWrapper>
     </div>
   );
 }
